@@ -6,6 +6,7 @@ using System.Linq;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
+using WeatherServiceConsoleClient.WeatherService;
 
 namespace WeatherServiceConsoleClient
 {
@@ -13,7 +14,15 @@ namespace WeatherServiceConsoleClient
     {
         static void Main(string[] args)
         {
+            GetWeatherGeneratedTest();
             GetWeatherTest();
+        }
+
+        private static void GetWeatherGeneratedTest()
+        {
+            WeatherService.WeatherServiceClient client = new WeatherService.WeatherServiceClient();
+            string result = client.GetWeather(DateTime.Now);
+            Console.WriteLine(result);
         }
 
         private static void GetWeatherTest()
@@ -26,7 +35,7 @@ namespace WeatherServiceConsoleClient
 
                 ChannelFactory<IWeatherService> proxy = new ChannelFactory<IWeatherService>(binding, endpoint);
 
-                IWeatherService client = proxy.CreateChannel();
+                 IWeatherService client = proxy.CreateChannel();
 
                 string result = client.GetWeather(DateTime.Now);
 

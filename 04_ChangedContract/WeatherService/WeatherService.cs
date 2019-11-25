@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WeatherService
 {
-    public class WeatherService : IWeatherService
+    public class WeatherService : IWeatherServiceChanged
     {
         public string GetWeather(DateTime datetime)
         {

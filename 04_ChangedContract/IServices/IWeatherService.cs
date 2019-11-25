@@ -8,8 +8,8 @@ using System.ServiceModel;
 namespace IServices
 {
     // add reference System.ServiceModel
-    [ServiceContract]
-    public interface IWeatherService
+    [ServiceContract(Name = "IWeatherService")]
+    public interface IWeatherServiceChanged
     {
         [OperationContract]
         string GetWeather(DateTime datetime);
