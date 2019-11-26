@@ -220,6 +220,8 @@ static void Main(string[] args)
     }
 ~~~
 
+
+
 ### Utworzenie klienta z użyciem fabryki **ChannelFactory**
 
 ~~~ csharp
@@ -236,6 +238,9 @@ private static void ChannelFactoryTest()
         ((IClientChannel)client).Close();
     }
 ~~~
+
+Zalety:
+- odporność na zmianę (nie wymaga żadnych modyfikacji przy zmianie kontraktu)
 
 
 ## Serializacja złożonych typów
