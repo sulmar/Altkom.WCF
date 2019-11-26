@@ -36,6 +36,12 @@ namespace IServices
         [MessageBodyMember(Order = 3)] 
         public string LastName { get; set; }
 
+
+        public EmployeeResponse()
+        {
+
+        }
+
         public EmployeeResponse(Employee employee)
         {
             this.Id = employee.Id;
