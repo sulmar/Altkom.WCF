@@ -96,7 +96,7 @@ public class HelloService : IHelloService
 }
 ~~~
 
-### Hosting
+### Self-Hosting
 
 1. Utwórz projekt _HelloServiceHost_
 
@@ -166,7 +166,9 @@ public class HelloService : IHelloService
 
 3. Uruchom jako administator
 
-### Klient
+## Klient
+
+### Utworzenie klienta z użyciem wygenerowanej klasy Proxy
 
 1. Utwórz projekt _HelloServiceConsoleClient_
 
@@ -183,7 +185,13 @@ static void Main(string[] args)
     }
 ~~~
 
-**uwaga** - pojawi się błąd, gdyż nie wybrano protokołu
+**uwaga** - W przypadku gdy w pliku konfiguracyjnym zdefiniowania wiele bindingów należy w konstruktorze przekazać nazwę konfiguracji.
+
+Zalety:
+- łatwe generowanie
+
+Wady:
+- Brak odporności na zmianę (po każdej zmianie kontraktu należy wygenerować klienta na nowo
 
  ~~~ csharp 
 static void Main(string[] args)
@@ -195,7 +203,7 @@ static void Main(string[] args)
     }
 ~~~
 
-### Klient z użyciem ClientBase<T>
+### Utworzenie klienta z własną klasą Proxy
 
 ~~~ csharp
   public class HelloServiceProxy : ClientBase<IHelloService>, IHelloService
@@ -212,7 +220,9 @@ static void Main(string[] args)
     }
 ~~~
 
-### Klient z użyciem fabryki **ChannelFactory**
+
+
+### Utworzenie klienta z użyciem fabryki **ChannelFactory**
 
 ~~~ csharp
 private static void ChannelFactoryTest()
@@ -228,6 +238,9 @@ private static void ChannelFactoryTest()
         ((IClientChannel)client).Close();
     }
 ~~~
+
+Zalety:
+- odporność na zmianę (nie wymaga żadnych modyfikacji przy zmianie kontraktu)
 
 
 ## Serializacja złożonych typów
