@@ -368,21 +368,177 @@ public interface IEmployeeService
 }
 ~~~
 
+## MessageContract
+
+
+~~~ csharp
+ [MessageContract(IsWrapped = true, WrapperName = "EmployeeRequestObject", WrapperNamespace = "http://altkom.pl")]
+    public class EmployeeRequest
+    {
+        [MessageHeader(Namespace = "http://altkom.pl")]
+        public string LicenseKey { get; set; }
+
+        [MessageBodyMember(Namespace = "http://altkom.pl")]
+        public int EmployeeId { get; set; }
+    }
+
+    [MessageContract(IsWrapped = true, WrapperName = "EmployeeInfoObject", WrapperNamespace = "http://altkom.pl")]
+    public class EmployeeInfo
+    {
+        [MessageBodyMember(Order = 1, Namespace = "http://altkom.pl")]
+        public int Id { get; set; }
+
+        [MessageBodyMember(Order = 2, Namespace = "http://altkom.pl")]
+        public string FirstName { get; set; }
+
+        [MessageBodyMember(Order = 3, Namespace = "http://altkom.pl")]
+        public string LastName { get; set; }
+
+        public EmployeeInfo()
+        {
+        }
+
+        public EmployeeInfo(Employee employee)
+        {
+            this.Id = employee.Id;
+            this.FirstName = employee.FirstName;
+            this.LastName = employee.LastName;
+        }
+
+    }
+~~~
+
+
+## Obsługa wyjątków
+
+### Metoda 1 plik konfiguracyjny
+
+~~~ xml
+ <behavior name="includeExceptionDetails">
+          <serviceDebug includeExceptionDetailInFaults="true" />
+        </behavior>
+~~~
+
+### Metoda 2 kod
+
+~~~ csharp
+  [ServiceBehavior(IncludeExceptionDetailInFaults =  true)]
+    public class CalculatorService : ICalculatorService
+    {
+        public int Divide(int numerator, int denominator)
+        {
+            return numerator / denominator;
+        }
+    }
+~~~
+
+W WCF należy rzucać wyjątkami **FaultException** lub **FaultException<T>** zamiast wyjątków .NET
+
+Są tego 2 przyczyny:
+- po wystąpieniu wyjątku kanał komunikacyjny przechodzi w stan Fault
+- wyjątki są specyficzne dla platformy .NET
+
+
+~~~ csharp
+public class CalculatorService : ICalculatorService
+    {
+        public int Divide(int Numerator, int Denominator)
+        {
+            if (Denominator == 0)
+                throw new DivideByZeroException();
+
+            return Numerator / Denominator;
+        }
+    }
+
+~~~
+
+
+~~~ csharp
+public class CalculatorService : ICalculatorService
+    {
+        public int Divide(int Numerator, int Denominator)
+        {
+            if (Denominator == 0)
+                throw new FaultException("Denomintor cannot be ZERO", new FaultCode("DivideByZeroFault"));
+
+            return Numerator / Denominator;
+        }
+    }
+
+~~~
+
+### Silnie typowane błędy SOAP
+
+~~~ csharp
+[DataContract]
+    public class DivideByZeroFault
+    {
+        [DataMember]
+        public string Error { get; set; }
+        [DataMember]
+        public string Details { get; set; }
+    }
+~~~
+
+~~~ csharp
+ public int Divide(int numerator, int denominator)
+        {
+            if (denominator == 0)
+            {
+                DivideByZeroFault divideByZeroFault = new DivideByZeroFault
+                {
+                    Error = "DivideByZero",
+                    Details = "denominator is zero"
+                };
+
+                throw new FaultException<DivideByZeroFault>(divideByZeroFault);
+            }
+
+            return numerator / denominator;
+        }
+~~~
+
+- Przechwytywanie 
+
+~~~ csharp
+ public int Calculate()
+ {
+
+    try
+   {
+   	 int result = client.Divide(10, 0);
+   } catch(FaultException<CalculatorService.DivideByZeroFault> e)
+{ 
+}  
+ } 
+
+~~~
+
+`
+
+
+
+
 ## Rest Api
 
-~~~ 
 SOAP/WCF -> RCP (Remote Call Procedures)
 REST API -> resources
 
 
 
+- Pobranie zasobu
+
 request:
+~~~
   GET http://localhost:8080/api/products HTTP/1.1
   Host: localhost
   Accept: application/xml
   {blank line}
-  
+~~~
+
 response:
+~~~
  200 OK
  Content-Type: application/xml
  
@@ -391,20 +547,11 @@ response:
    <product></product>
    <product></product>
 </xml>
+~~~
 
 
- GET http://localhost:8080/api/products
- GET http://localhost:8080/api/products/10 
- GET http://localhost:8080/api/products?from=100&to=200
- GET http://localhost:8080/api/products/10/customers
-
-
- POST http://localhost:8080/api/products
- 
- {"name":"komputer","unitprice":150 }
-
-
-
+- Utworzenie zasobu
+~~~
  POST http://localhost:8080/api/products HTTP/1.1
   Host: localhost
   Content-Type: application/json
@@ -412,30 +559,82 @@ response:
   {"name":"komputer","unitprice":150 }
 
   {blank line}
+~~~
 
 response:
+~~~
  201 Created
  Content-Type: application/xml
+~~~
 
-
+- Podmiana zasobu
+~~~
 PUT http://localhost:8080/api/products/10
 Host: localhost
   Content-Type: application/json
   Accept: application/xml
   {"name":"komputer","unitprice":250 }
+~~~
 
+- Aktualizacja zasobu
 
+~~~
 PATCH http://localhost:8080/api/products/10
 Host: localhost
   Content-Type: application/json
   Accept: application/xml
   {"unitprice":250 }
+~~~
 
+- Usunięcie zasobu
 
+~~~
 DELETE http://localhost:8080/api/products/10
+~~~
 
-~~~ 
+- Przykłowe trasy
+~~~
+ GET http://localhost:8080/api/products
+ GET http://localhost:8080/api/products/10 
+ GET http://localhost:8080/api/products?from=100&to=200
+ GET http://localhost:8080/api/products/10/customers
+~~~
 
+
+
+~~~ csharp
+ [ServiceContract(Namespace = "http://altkom.pl")]
+    public interface IProductService
+    {
+        [OperationContract]
+        [WebGet(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json, UriTemplate = "api/products")]
+        IEnumerable<Product> Get();
+
+        [OperationContract]
+        [WebGet(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json, UriTemplate = "api/products?from={from}&to={to}")]
+        IEnumerable<Product> GetByPrice(decimal from, decimal to);
+
+        [OperationContract]
+        [WebGet(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json, UriTemplate = "api/products/{id}")]
+        Product GetById(string id);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "api/products", Method = "POST",  RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
+          BodyStyle = WebMessageBodyStyle.Bare)]
+        void Add(Product product);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "api/products", Method = "PUT", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
+        BodyStyle = WebMessageBodyStyle.Bare)]
+        void Update(Product product);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "api/products/{id}", Method = "DELETE", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
+       BodyStyle = WebMessageBodyStyle.Bare)]
+        void Remove(string id);
+    }
+
+~~~
 
 ## WCF NET Core
 
