@@ -45,7 +45,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\IServices\IServices.csproj">
+    <ProjectReference Include="..\IServices\IServices.csproj">
       <Project>{3ff76f51-ab7f-4bb2-ae4f-e1a078254c24}</Project>
       <Name>IServices</Name>
     </ProjectReference>
