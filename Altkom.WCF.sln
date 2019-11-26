@@ -85,6 +85,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatServiceHost", "08_FullD
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatServiceConsoleClient", "08_FullDuplex\ChatServiceConsoleClient\ChatServiceConsoleClient.csproj", "{038760BE-A154-4B65-8B49-DE138EDCB05D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "09_RestApi", "09_RestApi", "{495A4A57-C846-4F18-AEB0-08FD06DC67F7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IServices", "09_RestApi\IServices\IServices.csproj", "{130B7404-C041-4843-BA03-5ADE838EF059}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -223,6 +227,10 @@ Global
 		{038760BE-A154-4B65-8B49-DE138EDCB05D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{038760BE-A154-4B65-8B49-DE138EDCB05D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{038760BE-A154-4B65-8B49-DE138EDCB05D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{130B7404-C041-4843-BA03-5ADE838EF059}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{130B7404-C041-4843-BA03-5ADE838EF059}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{130B7404-C041-4843-BA03-5ADE838EF059}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{130B7404-C041-4843-BA03-5ADE838EF059}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -261,6 +269,7 @@ Global
 		{2C7983D2-80EB-4EFA-A654-616E47D1B56C} = {4287B07F-7F27-472E-B88D-0975C48CBD89}
 		{BE519711-4347-476C-8012-40FB8AC43C32} = {4287B07F-7F27-472E-B88D-0975C48CBD89}
 		{038760BE-A154-4B65-8B49-DE138EDCB05D} = {4287B07F-7F27-472E-B88D-0975C48CBD89}
+		{130B7404-C041-4843-BA03-5ADE838EF059} = {495A4A57-C846-4F18-AEB0-08FD06DC67F7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8042A11F-5493-4B3E-903F-6AF415D85D7E}
