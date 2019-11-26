@@ -435,3 +435,8 @@ Host: localhost
 DELETE http://localhost:8080/api/products/10
 
 ~~~ 
+
+
+## WCF NET Core
+
+https://github.com/dotnet/wcf
