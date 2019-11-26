@@ -52,11 +52,4 @@ namespace IServices
             UriTemplate = "api/products/{id}")]
         void Remove(string id);
     }
-
-    public class Product
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public decimal UnitPrice { get; set; }
-    }
 }
