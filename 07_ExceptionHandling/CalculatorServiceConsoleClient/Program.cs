@@ -31,12 +31,21 @@ namespace CalculatorServiceConsoleClient
 
                     if (int.TryParse(Console.ReadLine(), out int denominator))
                     {
-                        int result = client.Divide(numerator, denominator);
-                        Console.WriteLine($"Result: {result}");
+                        try
+                        {
+                            int result = client.Divide(numerator, denominator);
+                            Console.WriteLine($"Result: {result}");
+                        }
+                        catch (FaultException e)
+                        {
+                            Console.WriteLine(e.Message);
+                        }
                     }
                 }
             }
 
         }
+
+        
     }
 }

@@ -22,6 +22,8 @@ namespace CalculatorServiceHost
                     Console.WriteLine(uri);
                 }
 
+
+
                 Console.WriteLine("Press Enter to exit.");
                 Console.ReadLine();
 
