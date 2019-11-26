@@ -367,3 +367,71 @@ public interface IEmployeeService
     void Add(Employee employee);
 }
 ~~~
+
+## Rest Api
+
+~~~ 
+SOAP/WCF -> RCP (Remote Call Procedures)
+REST API -> resources
+
+
+
+request:
+  GET http://localhost:8080/api/products HTTP/1.1
+  Host: localhost
+  Accept: application/xml
+  {blank line}
+  
+response:
+ 200 OK
+ Content-Type: application/xml
+ 
+ <xml>
+   <product></product>
+   <product></product>
+   <product></product>
+</xml>
+
+
+ GET http://localhost:8080/api/products
+ GET http://localhost:8080/api/products/10 
+ GET http://localhost:8080/api/products?from=100&to=200
+ GET http://localhost:8080/api/products/10/customers
+
+
+ POST http://localhost:8080/api/products
+ 
+ {"name":"komputer","unitprice":150 }
+
+
+
+ POST http://localhost:8080/api/products HTTP/1.1
+  Host: localhost
+  Content-Type: application/json
+  Accept: application/xml
+  {"name":"komputer","unitprice":150 }
+
+  {blank line}
+
+response:
+ 201 Created
+ Content-Type: application/xml
+
+
+PUT http://localhost:8080/api/products/10
+Host: localhost
+  Content-Type: application/json
+  Accept: application/xml
+  {"name":"komputer","unitprice":250 }
+
+
+PATCH http://localhost:8080/api/products/10
+Host: localhost
+  Content-Type: application/json
+  Accept: application/xml
+  {"unitprice":250 }
+
+
+DELETE http://localhost:8080/api/products/10
+
+~~~ 
