@@ -96,7 +96,7 @@ public class HelloService : IHelloService
 }
 ~~~
 
-### Hosting
+### Self-Hosting
 
 1. Utwórz projekt _HelloServiceHost_
 
@@ -186,6 +186,12 @@ static void Main(string[] args)
 ~~~
 
 **uwaga** - W przypadku gdy w pliku konfiguracyjnym zdefiniowania wiele bindingów należy w konstruktorze przekazać nazwę konfiguracji.
+
+Zalety:
+- łatwe generowanie
+
+Wady:
+- Brak odporności na zmianę (po każdej zmianie kontraktu należy wygenerować klienta na nowo
 
  ~~~ csharp 
 static void Main(string[] args)
