@@ -639,3 +639,7 @@ DELETE http://localhost:8080/api/products/10
 ## WCF NET Core
 
 https://github.com/dotnet/wcf
+
+## gPRC jako zamiennik WCF
+
+https://www.codemag.com/article/1911102?utm_source=msft-focus-tw&amp;utm_medium=social-promoted&amp;utm_campaign=sm-articles
