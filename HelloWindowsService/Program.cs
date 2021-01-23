@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using Topshelf;
@@ -17,10 +18,10 @@ namespace HelloWindowsService
         {
             HostFactory.Run(configure =>
             {
-                configure.Service<MySimpleService>(service =>
+                configure.Service<MyService>(service =>
                 {
                     // here you can pass dependencies and configuration to the service
-                    service.ConstructUsing(s => new MySimpleService());
+                    service.ConstructUsing(s => new MyService());
 
                     service.WhenStarted(s => s.Start());
                     service.WhenStopped(s => s.Stop());
@@ -50,6 +51,48 @@ namespace HelloWindowsService
                 .CreateLogger();
             return logger;
         }
+    }
+
+
+    public class MyService
+    {
+        private ServiceHost serviceHost;
+
+        private readonly LogWriter logger = HostLogger.Get<MyService>();
+
+        public bool Start()
+        {
+            try
+            {
+                serviceHost = new ServiceHost(typeof(HelloWindowsService.HelloService));
+
+                serviceHost.Open();
+
+                logger.Info("Service Running...");
+                Console.WriteLine("Press a key to quit");
+
+                return true;
+            }
+            catch(Exception e)
+            {
+                logger.Error(e);
+
+                return false;
+            }
+            finally
+            {
+                serviceHost.Close();
+            }
+
+        }
+
+        public bool Stop()
+        {
+            serviceHost.Close();
+
+            return true;
+        }
+
     }
 
     public class MySimpleService
