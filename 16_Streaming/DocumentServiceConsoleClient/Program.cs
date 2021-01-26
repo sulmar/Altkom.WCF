@@ -13,15 +13,15 @@ namespace DocumentServiceConsoleClient
     {
         static void Main(string[] args)
         {
-            //string url = "http://localhost:8080/DocumentService";
+            string url = "http://localhost:8080/DocumentService";
 
-            //BasicHttpBinding binding = new BasicHttpBinding();
+            BasicHttpBinding binding = new BasicHttpBinding();
 
-            NetTcpBinding binding = new NetTcpBinding();
-            binding.Security.Mode = SecurityMode.None;
+            //NetTcpBinding binding = new NetTcpBinding();
+            //binding.Security.Mode = SecurityMode.None;
 
             // Create the address string, or get it from configuration.
-            string url = "net.tcp://localhost:9000/streamserver";
+            // string url = "net.tcp://localhost:9000/streamserver";
 
             EndpointAddress endpoint = new EndpointAddress(url);
 
@@ -33,13 +33,13 @@ namespace DocumentServiceConsoleClient
 
             Console.WriteLine(result);
 
-            //Stream stream = client.GetLargeDocument();
+            Stream stream = client.GetLargeDocument();
 
-            //MemoryStream memoryStream = new MemoryStream();
-            //stream.CopyTo(stream);
+            MemoryStream memoryStream = new MemoryStream();
+            stream.CopyTo(stream);
 
-            //stream.Dispose();
-            //memoryStream.Dispose();
+            stream.Dispose();
+            memoryStream.Dispose();
 
 
         }

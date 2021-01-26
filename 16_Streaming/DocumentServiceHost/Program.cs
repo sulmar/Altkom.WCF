@@ -20,7 +20,7 @@ namespace DocumentServiceHost
                 {
                     NetTcpBinding binding = new NetTcpBinding();
                     binding.Security.Mode = SecurityMode.None;
-
+                    
                     serviceHost.AddServiceEndpoint(typeof(DocumentServices.IDocumentService), binding, "net.tcp://localhost:9000/streamserver");
 
                     Console.WriteLine("Host started on");
