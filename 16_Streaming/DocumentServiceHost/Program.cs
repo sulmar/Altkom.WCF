@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace DocumentServiceHost
 {
+
+    // https://docs.microsoft.com/pl-pl/dotnet/framework/wcf/feature-details/how-to-enable-streaming
+    // https://www.c-sharpcorner.com/uploadfile/afenster/wcf-streaming-large-data-files/
     class Program
     {
         static void Main(string[] args)
