@@ -18,10 +18,10 @@ namespace DocumentServiceHost
             {
                 using (var serviceHost = new ServiceHost(typeof(DocumentServices.DocumentService)))
                 {
-                    NetTcpBinding binding = new NetTcpBinding();
-                    binding.Security.Mode = SecurityMode.None;
+                    //NetTcpBinding binding = new NetTcpBinding();
+                    //binding.Security.Mode = SecurityMode.None;
                     
-                    serviceHost.AddServiceEndpoint(typeof(DocumentServices.IDocumentService), binding, "net.tcp://localhost:9000/streamserver");
+                    //serviceHost.AddServiceEndpoint(typeof(DocumentServices.IDocumentService), binding, "net.tcp://localhost:9000/streamserver");
 
                     Console.WriteLine("Host started on");
 
