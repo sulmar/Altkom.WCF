@@ -18,6 +18,13 @@ namespace DocumentServiceHost
             {
                 using (var serviceHost = new ServiceHost(typeof(DocumentServices.DocumentService)))
                 {
+                    Console.WriteLine("Host started on");
+
+                    foreach (var uri in serviceHost.BaseAddresses)
+                    {
+                        Console.WriteLine(uri);
+                    }
+
                     serviceHost.Open();
 
                     Console.WriteLine("Press Enter to exit.");

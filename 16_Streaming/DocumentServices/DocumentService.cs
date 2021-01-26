@@ -12,6 +12,9 @@ namespace DocumentServices
     public interface IDocumentService
     {
         [OperationContract]
+        string Ping();
+
+        [OperationContract]
         Stream GetLargeDocument();
     }
 
@@ -24,6 +27,11 @@ namespace DocumentServices
             FileStream stream = File.OpenRead(filePath);
 
             return stream;
+        }
+
+        public string Ping()
+        {
+            return "Pong";
         }
     }
 }
