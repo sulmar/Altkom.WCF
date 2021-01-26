@@ -14,20 +14,20 @@ namespace DocumentServices
         [OperationContract]
         string Ping();
 
-        [OperationContract]
-        Stream GetLargeDocument();
+        //[OperationContract]
+        //Stream GetLargeDocument();
     }
 
     [ServiceBehavior]
     public class DocumentService : IDocumentService
     {
-        public Stream GetLargeDocument()
-        {
-            string filePath = Path.Combine(Environment.CurrentDirectory, @"C:\temp\photo1.jpg");
-            FileStream stream = File.OpenRead(filePath);
+        //public Stream GetLargeDocument()
+        //{
+        //    string filePath = Path.Combine(Environment.CurrentDirectory, @"C:\temp\photo1.jpg");
+        //    FileStream stream = File.OpenRead(filePath);
 
-            return stream;
-        }
+        //    return stream;
+        //}
 
         public string Ping()
         {

@@ -33,13 +33,13 @@ namespace DocumentServiceConsoleClient
 
             Console.WriteLine(result);
 
-            Stream stream = client.GetLargeDocument();
+            //Stream stream = client.GetLargeDocument();
 
-            MemoryStream memoryStream = new MemoryStream();
-            stream.CopyTo(stream);
+            //MemoryStream memoryStream = new MemoryStream();
+            //stream.CopyTo(stream);
 
-            stream.Dispose();
-            memoryStream.Dispose();
+            //stream.Dispose();
+            //memoryStream.Dispose();
 
 
         }
