@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
+using System.ServiceModel.Channels;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -32,7 +33,20 @@ namespace HelloServiceConsoleClient
             ChannelFactory<IHelloService> proxy = new ChannelFactory<IHelloService>(binding, endpoint);
 
             IHelloService client = proxy.CreateChannel();
-            
+
+            MessageHeader shareableInstanceContextHeader = MessageHeader.CreateHeader(
+                                  "version",
+                                "http://domain.com",
+                                "1.0");
+
+            using (var context = new OperationContextScope((IClientChannel)proxy))
+            {
+               
+
+                OperationContext.Current.OutgoingMessageHeaders.Add(shareableInstanceContextHeader);
+            }
+
+
             string result = client.Ping("Hello");
             Console.WriteLine(result);
 
