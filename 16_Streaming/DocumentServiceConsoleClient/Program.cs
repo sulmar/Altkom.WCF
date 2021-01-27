@@ -41,6 +41,16 @@ namespace DocumentServiceConsoleClient
             stream.Dispose();
             memoryStream.Dispose();
 
+            // Upload
+            string filePath = Path.Combine(Environment.CurrentDirectory, @"C:\temp\photo1.jpg");
+            FileStream stream2 = File.OpenRead(filePath);
+
+            DocumentUpload document = new DocumentUpload { Author = "Marcin", Name = "Photo", Content = new MemoryStream() };
+            stream2.CopyTo(document.Content);
+
+            client.AddLargeDocument(document);
+
+
 
         }
     }

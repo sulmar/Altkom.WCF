@@ -16,11 +16,18 @@ namespace DocumentServices
 
         [OperationContract]
         Stream GetLargeDocument();
+        [OperationContract]
+        void AddLargeDocument(DocumentUpload document);
     }
 
     [ServiceBehavior]
     public class DocumentService : IDocumentService
     {
+        public void AddLargeDocument(DocumentUpload document)
+        {
+            throw new NotImplementedException();
+        }
+
         public Stream GetLargeDocument()
         {
             string filePath = Path.Combine(Environment.CurrentDirectory, @"C:\temp\photo1.jpg");
@@ -33,5 +40,16 @@ namespace DocumentServices
         {
             return "Pong";
         }
+    }
+
+    [MessageContract]
+    public class DocumentUpload
+    {
+        [MessageHeader]
+        public string Author { get; set; }
+        [MessageHeader] 
+        public string Name { get; set; }
+        [MessageBodyMember]
+        public Stream Content { get; set; }
     }
 }
