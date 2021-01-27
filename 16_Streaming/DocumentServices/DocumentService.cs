@@ -25,7 +25,10 @@ namespace DocumentServices
     {
         public void AddLargeDocument(DocumentUpload document)
         {
-            throw new NotImplementedException();
+            string filePath = Path.Combine(Environment.CurrentDirectory, @"C:\temp\test.txt");
+            FileStream stream = File.OpenWrite(filePath);
+
+            document.Content.CopyTo(stream);
         }
 
         public Stream GetLargeDocument()
